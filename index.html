@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>爆款限動製造機</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 一條固定工作列（店面摘要＋分頁）＋單欄工作台；限動以 9:16 小卡橫向排列，四念各有一個訊號色 */
+:root{
+  --bg:#F1F3F6; --surface:#FFFFFF; --surface-2:#E7EBF0; --line:#D3D9E1;
+  --ink:#142033; --ink-2:#4A5668; --ink-3:#6B7788;
+  --btn:#142033; --btn-ink:#FFFFFF;
+  --t-problem:#C2415B; --t-method:#2647D0; --t-proof:#1F8A5B; --t-action:#B86E0B;
+  --ok:#1F8A5B; --warn:#B86E0B;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F151F; --surface:#172130; --surface-2:#1E2A3B; --line:#2C3A4E;
+  --ink:#E8EDF4; --ink-2:#A3AFBF; --ink-3:#7F8C9E;
+  --btn:#E8EDF4; --btn-ink:#0F151F;
+  --t-problem:#F07890; --t-method:#8197FF; --t-proof:#4CC38A; --t-action:#F0A940;
+  --ok:#4CC38A; --warn:#F0A940; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F151F; --surface:#172130; --surface-2:#1E2A3B; --line:#2C3A4E;
+  --ink:#E8EDF4; --ink-2:#A3AFBF; --ink-3:#7F8C9E;
+  --btn:#E8EDF4; --btn-ink:#0F151F;
+  --t-problem:#F07890; --t-method:#8197FF; --t-proof:#4CC38A; --t-action:#F0A940;
+  --ok:#4CC38A; --warn:#F0A940; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.25}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--t-method);outline-offset:2px}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-direction:column;gap:10px;padding-block:14px 0}
+.brandline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;justify-content:space-between}
+.brandline h1{font-size:20px;font-weight:900;letter-spacing:.02em}
+.brandline h1 small{font-size:12px;font-weight:500;color:var(--ink-3);letter-spacing:.08em;margin-left:8px}
+.sync{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.sync i{width:7px;height:7px;border-radius:50%;background:var(--ink-3);display:inline-block}
+.sync.on i{background:var(--ok)}
+.shopstrip{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--ink-2)}
+.shopstrip b{color:var(--ink);font-weight:700}
+.kw{font-family:var(--f-mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--ink)}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -4px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:0;background:none;padding:10px 12px 11px;font-size:14px;font-weight:500;color:var(--ink-3);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:700}
+
+main .wrap{padding-block:22px 64px;display:flex;flex-direction:column;gap:20px}
+.view{display:flex;flex-direction:column;gap:20px}
+.lead h2{font-size:22px;font-weight:900}
+.lead p{margin:6px 0 0;color:var(--ink-2);max-width:62ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel h3{font-size:15px;font-weight:700}
+.panel .hint{font-size:13px;color:var(--ink-3);margin:-8px 0 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:500;color:var(--ink-2);min-width:0}
+label.f.full{grid-column:1/-1}
+input[type=text],input[type=number],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:15px;color:var(--ink)}
+textarea{min-height:76px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.btn{border:1px solid var(--btn);background:var(--btn);color:var(--btn-ink);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.small{padding:5px 11px;font-size:13px;font-weight:500}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.muted{color:var(--ink-3);font-size:13px}
+
+/* thought tags */
+.tg{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.tg::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.tg.problem{color:var(--t-problem);background:color-mix(in srgb,var(--t-problem) 12%,transparent)}
+.tg.method{color:var(--t-method);background:color-mix(in srgb,var(--t-method) 12%,transparent)}
+.tg.proof{color:var(--t-proof);background:color-mix(in srgb,var(--t-proof) 12%,transparent)}
+.tg.action{color:var(--t-action);background:color-mix(in srgb,var(--t-action) 14%,transparent)}
+
+.banner{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;border:1px dashed var(--line);border-radius:var(--r);padding:12px 16px;background:var(--surface-2);font-size:14px}
+
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.rung{border-radius:8px;padding:10px 12px;background:var(--surface-2);display:flex;flex-direction:column;gap:2px;min-width:0}
+.rung b{font-size:13px}
+.rung span{font-size:12.5px;color:var(--ink-2)}
+.rung .n{font-family:var(--f-mono);font-size:20px;font-weight:500;color:var(--ink)}
+.rung.problem{box-shadow:inset 3px 0 0 var(--t-problem)}.rung.method{box-shadow:inset 3px 0 0 var(--t-method)}.rung.proof{box-shadow:inset 3px 0 0 var(--t-proof)}.rung.action{box-shadow:inset 3px 0 0 var(--t-action)}
+@media (max-width:560px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.advice{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.advice dt{color:var(--ink-3);font-size:13px;padding-top:1px}
+.advice dd{margin:0}
+
+/* asset list */
+.alist{display:flex;flex-direction:column}
+.aitem{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:12px 0;border-top:1px solid var(--line)}
+.aitem:first-child{border-top:0}
+.aitem p{margin:0;min-width:0;overflow-wrap:anywhere}
+.aitem .meta{font-size:12px;color:var(--ink-3);margin-top:2px}
+.iconbtn{border:0;background:none;color:var(--ink-3);cursor:pointer;padding:2px 6px;border-radius:6px;font-size:13px}
+.iconbtn:hover{color:var(--ink);background:var(--surface-2)}
+
+/* templates */
+.tpls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:8px}
+.tpl{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.tpl[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.tpl b{font-size:14px}
+.tpl .muted{font-size:12px}
+.dots{display:flex;gap:3px}
+.dots i{width:16px;height:4px;border-radius:2px}
+.dots i.problem{background:var(--t-problem)}.dots i.method{background:var(--t-method)}.dots i.proof{background:var(--t-proof)}.dots i.action{background:var(--t-action)}
+.pickl{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto}
+.pick{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;padding:6px 8px;border-radius:6px;background:var(--bg)}
+.pick input{margin-top:4px}
+
+/* story frames */
+.reel{display:flex;gap:16px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x proximity}
+.frame{flex:none;width:228px;display:flex;flex-direction:column;gap:8px;scroll-snap-align:start}
+.card{position:relative;aspect-ratio:9/16;max-width:100%;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;padding:14px 14px 16px;gap:10px;color:var(--ink);background:var(--surface);border:1px solid var(--line)}
+.card.problem{background:linear-gradient(180deg,color-mix(in srgb,var(--t-problem) 16%,var(--surface)),var(--surface) 70%)}
+.card.method{background:linear-gradient(180deg,color-mix(in srgb,var(--t-method) 16%,var(--surface)),var(--surface) 70%)}
+.card.proof{background:linear-gradient(180deg,color-mix(in srgb,var(--t-proof) 16%,var(--surface)),var(--surface) 70%)}
+.card.action{background:linear-gradient(180deg,color-mix(in srgb,var(--t-action) 18%,var(--surface)),var(--surface) 70%)}
+.bars{display:flex;gap:3px}
+.bars i{flex:1;height:3px;border-radius:2px;background:color-mix(in srgb,var(--ink) 18%,transparent)}
+.bars i.on{background:var(--ink)}
+.card .lab{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-2)}
+.card .hl{font-size:19px;font-weight:900;line-height:1.3;outline:none;overflow-wrap:anywhere}
+.card .sb{font-size:13px;line-height:1.55;color:var(--ink-2);outline:none;white-space:pre-line;overflow-wrap:anywhere}
+.card .st{margin-top:auto;font-size:12px;border:1px dashed color-mix(in srgb,var(--ink) 30%,transparent);border-radius:8px;padding:6px 8px;color:var(--ink-2);outline:none;overflow-wrap:anywhere}
+.card .cta{align-self:flex-start;font-size:13px;font-weight:700;background:var(--btn);color:var(--btn-ink);border-radius:999px;padding:5px 12px;outline:none;overflow-wrap:anywhere}
+.card .cta:empty{display:none}
+.card .st:empty{display:none}
+[contenteditable]:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--t-method) 45%,transparent);border-radius:4px}
+.ph{background:color-mix(in srgb,var(--t-action) 22%,transparent);color:inherit;border-radius:3px;padding:0 2px}
+.vis{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.vis b{font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:.08em;color:var(--ink-3);margin-right:6px}
+.outhead{display:flex;flex-wrap:wrap;gap:8px 12px;justify-content:space-between;align-items:center}
+.outhead h3{font-size:17px}
+.status{font-size:13px;color:var(--ink-3);min-height:1.4em}
+.tips{margin:0;padding-left:1.2em;font-size:14px;color:var(--ink-2)}
+
+/* tables */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:10px 10px;border-top:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--ink-3);font-weight:500;border-top:0}
+td.c{width:40px}
+tr.done td{color:var(--ink-3)}
+tr.done td .idea{text-decoration:line-through}
+
+.ratio{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--surface-2)}
+.ratio i.problem{background:var(--t-problem)}.ratio i.method{background:var(--t-method)}.ratio i.proof{background:var(--t-proof)}.ratio i.action{background:var(--t-action)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
+
+/* checks */
+.crec{border-top:1px solid var(--line);padding-top:14px;display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:16px}
+.crec:first-child{border-top:0;padding-top:0}
+@media (max-width:620px){.crec{grid-template-columns:1fr}}
+.vbars{display:flex;align-items:flex-end;gap:6px;height:110px;padding-top:16px}
+.vbar{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;min-width:0}
+.vbar i{width:100%;border-radius:4px 4px 0 0;background:var(--surface-2);border:1px solid var(--line);border-bottom:0}
+.vbar i.worst{background:color-mix(in srgb,var(--t-problem) 30%,transparent);border-color:var(--t-problem)}
+.vbar span{font-family:var(--f-mono);font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.vbar em{font-style:normal;font-size:10.5px;color:var(--ink-3)}
+.metrics{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink-2)}
+.metrics b{font-family:var(--f-mono);font-weight:500;font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums;margin-left:4px}
+.finds{margin:0;padding-left:1.1em;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.empty{padding:22px;text-align:center;color:var(--ink-3);font-size:14px;border:1px dashed var(--line);border-radius:8px}
+pre.prompt{white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;max-height:280px;overflow:auto;margin:0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--btn);color:var(--btn-ink);padding:8px 16px;border-radius:999px;font-size:14px;z-index:20}
+@media (prefers-reduced-motion:no-preference){.frame{animation:rise .35s ease both}@keyframes rise{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brandline">
+      <h1>爆款限動製造機<small>一店四念</small></h1>
+      <div class="sync" id="sync"><i></i><span>只存在這台裝置</span></div>
+    </div>
+    <div class="shopstrip" id="shopstrip"></div>
+    <nav class="tabs" role="tablist" aria-label="功能分頁">
+      <button class="tab" role="tab" data-view="maker" id="tab-maker">製造機</button>
+      <button class="tab" role="tab" data-view="shop" id="tab-shop">店面定位</button>
+      <button class="tab" role="tab" data-view="assets" id="tab-assets">四念素材庫</button>
+      <button class="tab" role="tab" data-view="week" id="tab-week">一週排程</button>
+      <button class="tab" role="tab" data-view="check" id="tab-check">轉換健檢</button>
+      <button class="tab" role="tab" data-view="backup" id="tab-backup">備份</button>
+    </nav>
+  </div>
+</header>
+
+<main><div class="wrap">
+  <div class="banner" id="sampleBanner" hidden>
+    <span>目前是<b>範例資料</b>（品牌幕僚顧問）。改成你自己的帳號，製造機產出的劇本才會貼合你。</span>
+    <span class="row"><button class="btn small ghost" id="keepSample">保留範例直接改</button><button class="btn small" id="clearSample">清空範例，從頭填</button></span>
+  </div>
+
+  <!-- MAKER -->
+  <section class="view" data-v="maker" hidden>
+    <div class="lead"><h2>選模板、定主題，產出一組限動劇本</h2><p>每一格限動只推動客戶心中的一句話。挑模板之後勾選要用的素材，先出本機草稿，或請 Claude 依你的店面和素材寫一版。</p></div>
+    <div class="panel">
+      <h3>1　選劇本模板</h3>
+      <div class="tpls" id="tplList"></div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>2　這組限動的主題</h3>
+        <label class="f">主題（一句話）<input type="text" id="topic" placeholder="例：老闆的品牌決策為什麼常做錯"></label>
+        <label class="f">要用哪個口令
+          <select id="kwPick"></select>
+        </label>
+      </div>
+      <div class="panel">
+        <h3>3　勾選要用的素材</h3>
+        <p class="hint">見證素材只會用已取得授權的。沒勾的話，會自動挑符合格位的素材。</p>
+        <div class="pickl" id="pickList"></div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn" id="genLocal">產出本機草稿</button>
+      <button class="btn ghost" id="genClaude" hidden>請 Claude 寫一版</button>
+      <button class="btn ghost" id="stopClaude" hidden>停止</button>
+      <button class="btn ghost" id="copyPrompt">複製給其他 AI 的提示詞</button>
+    </div>
+    <div class="status" id="genStatus" aria-live="polite"></div>
+    <div class="panel" id="outPanel">
+      <div class="outhead"><h3 id="outTitle">劇本</h3><span class="row"><button class="btn small ghost" id="copyScript">複製文字</button></span></div>
+      <p class="hint">主文字、副文字、貼紙、口令都可以直接點進去改，會自動存。<mark class="ph">黃底</mark>是要你補上的真實內容。</p>
+      <div class="reel" id="reel"></div>
+      <ul class="tips" id="tips"></ul>
+    </div>
+    <div class="panel">
+      <h3>劇本庫</h3>
+      <div id="scriptList"></div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="view" data-v="shop" hidden>
+    <div class="lead"><h2>店面定位：先說清楚你在賣什麼、賣給誰</h2><p>這些欄位會帶進每一組劇本和提示詞。帳號類型決定哪一念要加重、見證長什麼樣、口令要換什麼。</p></div>
+    <div class="panel">
+      <h3>帳號類型</h3>
+      <div class="chips" id="typeChips"></div>
+      <dl class="advice" id="typeAdvice"></dl>
+    </div>
+    <div class="panel">
+      <h3>品牌與客戶</h3>
+      <div class="fields">
+        <label class="f">品牌／帳號名稱<input type="text" id="s-brand"></label>
+        <label class="f">一句話定位<input type="text" id="s-pitch" placeholder="幫誰，解決什麼"></label>
+        <label class="f full">目標客戶<input type="text" id="s-audience" placeholder="越具體越好：職位、規模、處境"></label>
+        <label class="f full">客戶最痛的問題（問題念的來源）<textarea id="s-pain"></textarea></label>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>你的方法（方法念的來源）</h3>
+      <p class="hint">有名字、有步驟的模型最好記。像「1 拍 → 2 丟 → 3 跑 → 4 改」。</p>
+      <div class="fields">
+        <label class="f">方法模型名稱<input type="text" id="s-model" placeholder="例：決策三問"></label>
+        <label class="f">步驟（用頓號分隔，3–4 個）<input type="text" id="s-steps" placeholder="例：目標、代價、退路"></label>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>產品與口令閘門</h3>
+      <p class="hint">單價越高，口令換到的東西要越小，像「先試一口」。</p>
+      <div class="fields">
+        <label class="f">主力產品／服務<input type="text" id="s-product"></label>
+        <label class="f">單價級距
+          <select id="s-tier">
+            <option value="t1">NT$1,000 以下（當天決定）</option>
+            <option value="t2">NT$1,000–10,000（3–7 天）</option>
+            <option value="t3">NT$10,000–100,000（2–4 週）</option>
+            <option value="t4">NT$100,000 以上（1–3 個月）</option>
+          </select>
+        </label>
+        <label class="f">口令 A（2–3 字）<input type="text" id="s-kwA"></label>
+        <label class="f">口令 A 換到<input type="text" id="s-kwAgive"></label>
+        <label class="f">口令 B（選填，第二條產品線）<input type="text" id="s-kwB"></label>
+        <label class="f">口令 B 換到<input type="text" id="s-kwBgive"></label>
+      </div>
+      <div class="muted" id="tierAdvice"></div>
+    </div>
+    <div class="panel">
+      <h3>語氣</h3>
+      <div class="chips" id="toneChips"></div>
+    </div>
+  </section>
+
+  <!-- ASSETS -->
+  <section class="view" data-v="assets" hidden>
+    <div class="lead"><h2>四念素材庫：平常就把素材分好念</h2><p>客戶的一句抱怨、會議裡的一個框架、一則感謝訊息、一個名額更新，隨手記下來。哪一念的素材少，就是你下一週要補的。</p></div>
+    <div class="ladder" id="ladder"></div>
+    <div class="panel">
+      <h3>新增一則素材</h3>
+      <div class="chips" id="newThought"></div>
+      <label class="f">內容<textarea id="newText" placeholder="寫下真實發生的事：客戶原話、數字、框架、更新"></textarea></label>
+      <div class="fields">
+        <label class="f">來源
+          <select id="newKind"><option>客戶回饋</option><option>工作幕後</option><option>知識框架</option><option>成果數字</option><option>產品更新</option><option>生活觀察</option><option>其他</option></select>
+        </label>
+        <label class="f" id="consentWrap" style="justify-content:flex-end"><span class="row" style="font-weight:400"><input type="checkbox" id="newConsent"> 已取得當事人同意公開（見證必填）</span></label>
+      </div>
+      <div class="row"><button class="btn" id="addAsset">加入素材庫</button></div>
+    </div>
+    <div class="panel">
+      <div class="outhead"><h3>素材</h3><div class="chips" id="assetFilter"></div></div>
+      <div class="alist" id="assetList"></div>
+    </div>
+  </section>
+
+  <!-- WEEK -->
+  <section class="view" data-v="week" hidden>
+    <div class="lead"><h2>一週排程：每天一個主題串，四念都要出現</h2><p>排程依你的帳號類型調整配比。做完就打勾；點「產出」直接帶著模板到製造機。</p></div>
+    <div class="panel">
+      <div class="outhead"><h3 id="weekTitle">本週</h3><span class="muted" id="weekProgress"></span></div>
+      <div>
+        <div class="muted" style="margin-bottom:6px">目標配比（每週約 9 個主題串）</div>
+        <div class="ratio" id="ratioBar"></div>
+        <div class="legend" id="ratioLegend" style="margin-top:8px"></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>完成</th><th>日</th><th>主力念</th><th>做什麼</th><th>模板</th><th></th></tr></thead>
+        <tbody id="weekBody"></tbody>
+      </table></div>
+      <p class="muted" style="margin:0">每週日晚上檢查兩件事：四念有沒有都出現？口令有沒有至少出現 2 次？</p>
+    </div>
+  </section>
+
+  <!-- CHECK -->
+  <section class="view" data-v="check" hidden>
+    <div class="lead"><h2>轉換健檢：找出客戶卡在哪一念</h2><p>每個限動串只記三個數字：每一格的觀看數、口令數。流失最多的那一格，就是要先改的地方。先記滿 2 週再下結論。</p></div>
+    <div class="panel">
+      <h3>記一筆</h3>
+      <div class="fields">
+        <label class="f">名稱<input type="text" id="c-name" placeholder="例：10/30 三格見證"></label>
+        <label class="f">對應劇本（選填，用來判斷是哪一念）<select id="c-script"></select></label>
+        <label class="f">每一格觀看數（用逗號分隔）<input type="text" id="c-views" placeholder="例：820, 610, 380" inputmode="numeric"></label>
+        <label class="f">口令數（留言或私訊）<input type="number" id="c-kw" min="0" inputmode="numeric"></label>
+      </div>
+      <div class="row"><button class="btn" id="addCheck">加入健檢</button><span class="muted" id="checkErr"></span></div>
+    </div>
+    <div class="panel">
+      <div class="outhead"><h3>紀錄</h3><span class="muted" id="checkAvg"></span></div>
+      <div id="checkList"></div>
+    </div>
+  </section>
+
+  <!-- BACKUP -->
+  <section class="view" data-v="backup" hidden>
+    <div class="lead"><h2>備份與還原</h2><p id="backupNote">資料會存在你的 Claude 帳號；沒登入時只存在這台裝置的瀏覽器。換裝置或交給學員前，可以匯出一份。</p></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>匯出</h3>
+        <p class="hint">店面、素材、劇本、排程、健檢紀錄，整包存成一個 JSON 檔。</p>
+        <div class="row"><button class="btn" id="exportBtn">下載備份檔</button><button class="btn ghost" id="showJson">顯示 JSON</button></div>
+        <textarea id="jsonOut" hidden readonly style="min-height:180px;font-family:var(--f-mono);font-size:12px"></textarea>
+      </div>
+      <div class="panel">
+        <h3>匯入</h3>
+        <p class="hint">選一個先前匯出的 JSON 檔，會取代目前全部資料。</p>
+        <input type="file" id="importFile" accept="application/json,.json">
+        <div class="row" id="importConfirm" hidden><span>確定用這個檔案取代目前資料？</span><button class="btn small" id="importYes">取代</button><button class="btn small ghost" id="importNo">取消</button></div>
+        <div class="muted" id="importMsg"></div>
+      </div>
+      <div class="panel">
+        <h3>重設</h3>
+        <p class="hint">清空全部資料，回到空白店面。這個動作無法復原。</p>
+        <div class="row"><button class="btn ghost" id="resetBtn">清空全部資料</button><span class="row" id="resetConfirm" hidden><button class="btn small" id="resetYes">確定清空</button><button class="btn small ghost" id="resetNo">取消</button></span></div>
+      </div>
+    </div>
+  </section>
+</div></main>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid8 = () => Math.random().toString(36).slice(2, 10);
+const clone = o => JSON.parse(JSON.stringify(o));
+
+/* ---------- 方法論資料 ---------- */
+const TH = {
+  problem:{name:'問題念', line:'原來我有這個問題'},
+  method:{name:'方法念', line:'原來你有方法'},
+  proof:{name:'見證念', line:'原來別人做到了'},
+  action:{name:'行動念', line:'我現在就要'}
+};
+const TH_KEYS = ['problem','method','proof','action'];
+const TYPES = {
+  course:{name:'知識課程', heavy:['method','proof'], proof:'學員成果截圖、作品前後', gate:'免費試聽、模板', focus:'步驟條示範＋學員勝利', ratio:{problem:2,method:4,proof:2,action:1}},
+  b2b:{name:'B2B 顧問', heavy:['method'], proof:'同產業決策者回饋、案例前後數字', gate:'診斷表、體驗坊、案例集', focus:'會議幕後、決策框架、思考過程；方法念要占一半以上', ratio:{problem:2,method:5,proof:1,action:1}},
+  store:{name:'實體店／餐飲', heavy:['action'], proof:'客人打卡轉發、排隊現場', gate:'訂位、來店禮', focus:'今日現場、限量、新品', ratio:{problem:2,method:2,proof:2,action:3}},
+  product:{name:'商品／電商', heavy:['problem','proof'], proof:'開箱、回購、使用前後', gate:'折扣碼、組合優惠', focus:'使用情境、庫存、檔期', ratio:{problem:3,method:2,proof:3,action:1}},
+  lifestyle:{name:'生活風格／個人品牌', heavy:['problem','method'], proof:'粉絲私訊回饋', gate:'免費清單、選物連結', focus:'每 3–4 則生活插 1 則知識點', ratio:{problem:3,method:4,proof:1,action:1}}
+};
+const TIERS = {
+  t1:{name:'NT$1,000 以下', cycle:'當天', gate:'折扣碼、模板、懶人包'},
+  t2:{name:'NT$1,000–10,000', cycle:'3–7 天', gate:'免費試聽、體驗課、清單'},
+  t3:{name:'NT$10,000–100,000', cycle:'2–4 週', gate:'診斷表、體驗坊名額、案例集'},
+  t4:{name:'NT$100,000 以上', cycle:'1–3 個月', gate:'一對一諮詢、閉門分享會'}
+};
+const TONES = ['直白','溫暖','專業','幽默','犀利','療癒','熱血'];
+const TPLS = {
+  A:{name:'三格見證轉換', when:'有客戶或學員成果時', th:['method','proof','action'],
+     desc:'示範格（分享 Reel 或輪播＋3–4 步步驟條＋口令）→ 見證格（客戶前後轉變截圖，標題寫轉變，勾選 2 個好處，第二個口令）→ 動能格（產品更新或名額數字＋2–3 則回饋疊圖，口令重複）'},
+  B:{name:'五格痛點教學', when:'推出新服務或課程時', th:['problem','method','problem','method','action'],
+     desc:'比喻提問（如果 ___ 是一間 ___，你的 ___ 正在幫你 ___ 嗎？）→ 重新框定（用比喻拆出 3 個角色或步驟）→ 痛點鏡像（是不是也長這樣？）→ 心理機制（一個有名字的模型）→ 命名產品＋贈送口令（這段我決定免費開放）'},
+  C:{name:'日常信任串', when:'每天固定經營', th:['problem','method','proof'],
+     desc:'早上：工作現場或客戶問題 → 下午：一個 30 秒知識點或決策框架 → 晚上：今天一個客戶或學員的小成果'},
+  D:{name:'檔期倒數', when:'有開班、名額、檔期時', th:['action','proof','proof','action'],
+     desc:'連續 3–5 天：第 1 天宣布＋為什麼現在做 → 第 2–3 天每天一則見證＋一個常見疑問的回答 → 最後一天剩餘名額、截止時間、口令'},
+  E:{name:'互動問答', when:'蒐集需求、炒熱互動', th:['problem','method','action'],
+     desc:'投票或問題箱（你最卡的是 A 還是 B？）→ 隔天公布結果，挑 2–3 題回答 → 回答最後接口令（想要完整版，留言 ___）'}
+};
+const DIAG = {
+  problem:'追蹤者覺得與他無關：換成他的痛點，不是你的日常。',
+  method:'知識點太長或沒名字：壓成 3–4 步，給它一個名字。',
+  proof:'他不相信自己也做得到：換成跟他最像的人的見證。',
+  action:'入口太大：降一級口令（例如諮詢改成診斷表）。'
+};
+const WEEK_BASE = [
+  {d:'週一', th:['problem','method'], tpl:'E', idea:'投票「這週你最卡的是 A 還是 B」'},
+  {d:'週二', th:['method'], tpl:'C', idea:'工作現場＋一個有名字的知識點'},
+  {d:'週三', th:['proof'], tpl:'A', idea:'一則客戶轉變＋口令'},
+  {d:'週四', th:['method'], tpl:'C', idea:'回答週一投票的前 2 題'},
+  {d:'週五', th:['proof','action'], tpl:'A', idea:'本週成果整理＋名額或更新'},
+  {d:'週六', th:['problem'], tpl:'C', idea:'生活中看到的一個錯誤案例'},
+  {d:'週日', th:['method'], tpl:'C', idea:'本週最多人回覆的知識點重發'}
+];
+function weekPlan(type){
+  const w = clone(WEEK_BASE);
+  if (type === 'store'){ w[4] = {d:'週五', th:['action'], tpl:'D', idea:'週末限量或新品預告＋口令'}; w[5] = {d:'週六', th:['action','proof'], tpl:'D', idea:'今日現場＋客人打卡轉發'}; }
+  if (type === 'product'){ w[4] = {d:'週五', th:['proof','action'], tpl:'D', idea:'回購或開箱見證＋檔期倒數'}; }
+  if (type === 'b2b'){ w[5] = {d:'週六', th:['method'], tpl:'C', idea:'拆解一個你這週用過的決策框架'}; }
+  if (type === 'lifestyle'){ w[2] = {d:'週三', th:['problem','method'], tpl:'C', idea:'生活片段裡藏一個知識點'}; }
+  return w;
+}
+
+/* ---------- 狀態 ---------- */
+function blankState(){
+  return {v:1, isSample:false, updatedAt:0,
+    shop:{brand:'', type:'b2b', pitch:'', audience:'', pain:'', model:'', steps:'', product:'', tier:'t3', kwA:'', kwAgive:'', kwB:'', kwBgive:'', tone:['直白']},
+    assets:[], scripts:[], current:null, week:{key:'', done:{}}, checks:[], ui:{tpl:'A', topic:'', kw:'A', filter:'all'}};
+}
+function sampleState(){
+  const s = blankState();
+  s.isSample = true;
+  s.shop = {brand:'範例｜品牌幕僚顧問', type:'b2b', pitch:'幫中小企業老闆把關鍵決策做對', audience:'年營收 3,000 萬到 3 億、自己還在扛行銷決策的老闆', pain:'每天忙著救火，品牌和行銷決策靠感覺，做了很多卻說不出自己差在哪', model:'決策三問', steps:'目標、代價、退路', product:'品牌決策診斷', tier:'t3', kwA:'診斷', kwAgive:'品牌決策診斷表', kwB:'案例', kwBgive:'3 個轉型前後案例集', tone:['直白','專業']};
+  const t = Date.now();
+  s.assets = [
+    {id:uid8(), thought:'problem', kind:'工作幕後', text:'範例：老闆在會議上問「我們什麼都做了，為什麼客人還是不知道我們差在哪？」', consent:false, at:t},
+    {id:uid8(), thought:'method', kind:'知識框架', text:'範例：決策三問——這件事的目標是什麼？要付出什麼代價？做錯了退路在哪？', consent:false, at:t},
+    {id:uid8(), thought:'proof', kind:'客戶回饋', text:'範例：以前開會兩小時沒結論，用決策三問 20 分鐘就拍板', consent:true, at:t},
+    {id:uid8(), thought:'action', kind:'產品更新', text:'範例：本月診斷名額剩 6 位', consent:false, at:t}
+  ];
+  s.checks = [
+    {id:uid8(), name:'範例｜三格見證 10/23', views:[760,590,410], kw:7, scriptId:'', at:t-6*864e5},
+    {id:uid8(), name:'範例｜日常信任串 10/27', views:[820,450,380], kw:3, scriptId:'', at:t-2*864e5}
+  ];
+  s.ui.topic = '老闆的品牌決策為什麼常做錯';
+  return s;
+}
+function normalize(s){
+  const b = blankState();
+  if (!s || typeof s !== 'object') return b;
+  const out = Object.assign(b, s);
+  out.shop = Object.assign(blankState().shop, s.shop || {});
+  out.ui = Object.assign(blankState().ui, s.ui || {});
+  out.week = Object.assign({key:'', done:{}}, s.week || {});
+  ['assets','scripts','checks'].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
+  if (!Array.isArray(out.shop.tone)) out.shop.tone = [];
+  return out;
+}
+
+const LS = 'storymaker.v1';
+function loadLocal(){ try { const v = localStorage.getItem(LS); return v ? JSON.parse(v) : null; } catch(e){ return null; } }
+function saveLocal(){ try { localStorage.setItem(LS, JSON.stringify(state)); } catch(e){} }
+
+let state = normalize(loadLocal() || sampleState());
+let docRef = null, saveTimer = null, saving = false, again = false;
+
+function setSync(on){
+  const el = $('#sync');
+  el.classList.toggle('on', on);
+  el.querySelector('span').textContent = on ? '已存到你的帳號' : '只存在這台裝置';
+  $('#backupNote').textContent = on
+    ? '資料存在你的 Claude 帳號裡，換裝置打開這個頁面也看得到。交給學員或另存一份時，可以匯出。'
+    : '目前資料只存在這台裝置的瀏覽器裡，清除瀏覽器資料就會不見。建議定期匯出一份。';
+}
+function touch(){ state.updatedAt = Date.now(); saveLocal(); if (docRef){ clearTimeout(saveTimer); saveTimer = setTimeout(flush, 1200); } }
+async function flush(){
+  if (!docRef) return;
+  if (saving){ again = true; return; }
+  saving = true;
+  try { await docRef.set(clone(state)); setSync(true); }
+  catch(e){ setSync(false); if (e && e.code === 'invalid_argument') docRef = null; }
+  saving = false;
+  if (again){ again = false; flush(); }
+}
+
+/* ---------- 共用 ---------- */
+const tag = t => `<span class="tg ${t}">${TH[t].name}</span>`;
+function toast(msg){ const d = document.createElement('div'); d.className='toast'; d.textContent=msg; document.body.appendChild(d); setTimeout(()=>d.remove(), 1800); }
+async function copyText(text){
+  try { await navigator.clipboard.writeText(text); toast('已複製'); }
+  catch(e){
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('已複製'); } catch(_){ toast('請手動選取複製'); }
+    ta.remove();
+  }
+}
+const steps = () => (state.shop.steps || '').split(/[、,，\/\s]+/).map(x=>x.trim()).filter(Boolean);
+function kwInfo(which){
+  const S = state.shop;
+  if (which === 'B' && S.kwB) return {kw:S.kwB, give:S.kwBgive};
+  return {kw:S.kwA, give:S.kwAgive};
+}
+
+/* ---------- 頂部摘要 ---------- */
+function renderStrip(){
+  const S = state.shop;
+  const kws = [S.kwA && `<span class="kw">留言「${esc(S.kwA)}」</span>`, S.kwB && `<span class="kw">留言「${esc(S.kwB)}」</span>`].filter(Boolean).join('');
+  $('#shopstrip').innerHTML = `<b>${esc(S.brand || '還沒設定店面')}</b><span>${esc(TYPES[S.type]?.name || '')}</span>${kws || '<span class="muted">還沒設定口令</span>'}`;
+  $('#sampleBanner').hidden = !state.isSample;
+}
+
+/* ---------- 店面 ---------- */
+function renderShop(){
+  const S = state.shop;
+  $('#typeChips').innerHTML = Object.entries(TYPES).map(([k,v]) => `<button class="chip" data-type="${k}" aria-pressed="${S.type===k}">${v.name}</button>`).join('');
+  const T = TYPES[S.type];
+  $('#typeAdvice').innerHTML = `<dt>加重的念</dt><dd>${T.heavy.map(tag).join(' ')}</dd><dt>見證形式</dt><dd>${esc(T.proof)}</dd><dt>口令入口</dt><dd>${esc(T.gate)}</dd><dt>限動重點</dt><dd>${esc(T.focus)}</dd>`;
+  ['brand','pitch','audience','pain','model','steps','product','tier','kwA','kwAgive','kwB','kwBgive'].forEach(k => { const el = $('#s-'+k); if (el && document.activeElement !== el) el.value = S[k] || ''; });
+  const tier = TIERS[S.tier];
+  $('#tierAdvice').textContent = `${tier.name}：決策週期約 ${tier.cycle}，口令適合換「${tier.gate}」。口令用結果或動作命名，一個口令只通往一個入口。`;
+  $('#toneChips').innerHTML = TONES.map(t => `<button class="chip" data-tone="${t}" aria-pressed="${S.tone.includes(t)}">${t}</button>`).join('');
+}
+$('#typeChips').addEventListener('click', e => { const b = e.target.closest('[data-type]'); if (!b) return; state.shop.type = b.dataset.type; touch(); renderShop(); renderStrip(); renderWeek(); });
+$('#toneChips').addEventListener('click', e => { const b = e.target.closest('[data-tone]'); if (!b) return; const t = b.dataset.tone, a = state.shop.tone; const i = a.indexOf(t); i>=0 ? a.splice(i,1) : a.push(t); touch(); renderShop(); });
+['brand','pitch','audience','pain','model','steps','product','tier','kwA','kwAgive','kwB','kwBgive'].forEach(k => {
+  const el = $('#s-'+k);
+  el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => { state.shop[k] = el.value.trim() === '' ? '' : el.value; touch(); renderStrip(); if (k==='tier') renderShop(); if (k.startsWith('kw')) renderKwPick(); });
+});
+
+/* ---------- 素材庫 ---------- */
+let newThought = 'problem';
+function renderAssets(){
+  const counts = Object.fromEntries(TH_KEYS.map(k => [k, state.assets.filter(a => a.thought===k).length]));
+  const low = TH_KEYS.reduce((m,k) => counts[k] < counts[m] ? k : m, 'problem');
+  $('#ladder').innerHTML = TH_KEYS.map((k,i) => `<div class="rung ${k}"><b>${i+1} ${TH[k].name}</b><span>「${TH[k].line}」</span><span class="n">${counts[k]}</span>${k===low && state.assets.length ? '<span style="color:var(--warn)">最缺，先補這一念</span>' : ''}</div>`).join('');
+  $('#newThought').innerHTML = TH_KEYS.map(k => `<button class="chip" data-nt="${k}" aria-pressed="${newThought===k}">${TH[k].name}</button>`).join('');
+  $('#consentWrap').style.visibility = newThought === 'proof' ? 'visible' : 'hidden';
+  const f = state.ui.filter;
+  $('#assetFilter').innerHTML = ['all',...TH_KEYS].map(k => `<button class="chip" data-af="${k}" aria-pressed="${f===k}">${k==='all'?'全部':TH[k].name}</button>`).join('');
+  const list = state.assets.filter(a => f==='all' || a.thought===f).slice().sort((a,b) => b.at - a.at);
+  $('#assetList').innerHTML = list.length ? list.map(a => `<div class="aitem"><div>${tag(a.thought)}</div><div><p>${esc(a.text)}</p><div class="meta">${esc(a.kind)}${a.thought==='proof' ? (a.consent ? '・已取得同意' : '・<span style="color:var(--warn)">尚未取得同意，製造機不會使用</span>') : ''}</div></div><button class="iconbtn" data-del-asset="${a.id}" aria-label="刪除這則素材">刪除</button></div>`).join('')
+    : '<div class="empty">這一念還沒有素材。從上面新增一則真實發生的事。</div>';
+}
+$('#newThought').addEventListener('click', e => { const b = e.target.closest('[data-nt]'); if (!b) return; newThought = b.dataset.nt; renderAssets(); });
+$('#assetFilter').addEventListener('click', e => { const b = e.target.closest('[data-af]'); if (!b) return; state.ui.filter = b.dataset.af; touch(); renderAssets(); });
+$('#addAsset').addEventListener('click', () => {
+  const text = $('#newText').value.trim();
+  if (!text){ $('#newText').focus(); toast('先寫下素材內容'); return; }
+  state.assets.push({id:uid8(), thought:newThought, kind:$('#newKind').value, text, consent: newThought==='proof' ? $('#newConsent').checked : false, at:Date.now()});
+  if (state.assets.length > 200) state.assets.shift();
+  $('#newText').value = ''; $('#newConsent').checked = false;
+  touch(); renderAssets(); renderPicks(); toast('已加入素材庫');
+});
+$('#assetList').addEventListener('click', e => { const b = e.target.closest('[data-del-asset]'); if (!b) return; state.assets = state.assets.filter(a => a.id !== b.dataset.delAsset); touch(); renderAssets(); renderPicks(); });
+
+/* ---------- 製造機 ---------- */
+let picked = new Set();
+function renderTpls(){
+  $('#tplList').innerHTML = Object.entries(TPLS).map(([k,t]) => `<button class="tpl" data-tpl="${k}" aria-pressed="${state.ui.tpl===k}"><b>${k}　${t.name}</b><span class="dots">${t.th.map(x=>`<i class="${x}"></i>`).join('')}</span><span class="muted">${t.when}・${t.th.length} 格</span></button>`).join('');
+}
+function renderKwPick(){
+  const S = state.shop, opts = [];
+  opts.push(`<option value="A">口令 A：${esc(S.kwA || '（未設定）')}${S.kwAgive ? '→ '+esc(S.kwAgive) : ''}</option>`);
+  if (S.kwB) opts.push(`<option value="B">口令 B：${esc(S.kwB)}${S.kwBgive ? '→ '+esc(S.kwBgive) : ''}</option>`);
+  $('#kwPick').innerHTML = opts.join('');
+  $('#kwPick').value = S.kwB ? state.ui.kw : 'A';
+}
+function usableAssets(){ return state.assets.filter(a => a.thought !== 'proof' || a.consent); }
+function renderPicks(){
+  const need = new Set(TPLS[state.ui.tpl].th);
+  const list = usableAssets().slice().sort((a,b) => (need.has(b.thought) - need.has(a.thought)) || (b.at - a.at));
+  picked = new Set([...picked].filter(id => list.some(a => a.id === id)));
+  $('#pickList').innerHTML = list.length ? list.map(a => `<label class="pick"><input type="checkbox" data-pick="${a.id}" ${picked.has(a.id)?'checked':''}><span>${tag(a.thought)} ${esc(a.text)}</span></label>`).join('')
+    : '<div class="empty">素材庫是空的。到「四念素材庫」記幾則真實素材，劇本會更具體。</div>';
+}
+$('#tplList').addEventListener('click', e => { const b = e.target.closest('[data-tpl]'); if (!b) return; state.ui.tpl = b.dataset.tpl; touch(); renderTpls(); renderPicks(); });
+$('#pickList').addEventListener('change', e => { const c = e.target.closest('[data-pick]'); if (!c) return; c.checked ? picked.add(c.dataset.pick) : picked.delete(c.dataset.pick); });
+$('#topic').addEventListener('input', e => { state.ui.topic = e.target.value; touch(); });
+$('#kwPick').addEventListener('change', e => { state.ui.kw = e.target.value; touch(); });
+
+function assetPool(){
+  const usable = usableAssets();
+  const chosen = usable.filter(a => picked.has(a.id));
+  const rest = usable.filter(a => !picked.has(a.id)).sort((a,b) => b.at - a.at);
+  const used = new Set();
+  return thought => {
+    const src = chosen.length ? chosen : rest;
+    const a = src.find(x => x.thought === thought && !used.has(x.id));
+    if (a){ used.add(a.id); return a.text.replace(/^範例：/, ''); }
+    return null;
+  };
+}
+const P = s => `【${s}】`;
+function localScript(){
+  const S = state.shop, tpl = state.ui.tpl, topic = state.ui.topic.trim() || P('這組限動的主題');
+  const take = assetPool(), st = steps();
+  const k = kwInfo(state.ui.kw), kA = kwInfo('A'), kB = S.kwB ? kwInfo('B') : null;
+  const kwText = (x, verb) => x.kw ? `留言「${x.kw}」${verb || ''}${x.give || ''}` : `留言「${P('口令')}」`;
+  const model = S.model || P('方法模型名稱');
+  const prod = S.product || P('產品名稱');
+  const stepLine = st.length ? st.map((s,i) => `${i+1} ${s}`).join(' → ') : `1 ${P('步驟')} → 2 ${P('步驟')} → 3 ${P('步驟')}`;
+  let frames = [];
+  if (tpl === 'A'){
+    const pr = take('proof'), ac = take('action');
+    frames = [
+      {thought:'method', label:'示範格', visual:'分享你最新的 Reel 或輪播，人物入鏡；上方疊步驟條（圓形數字＋2 字動詞）', headline:`${topic}，只要 ${st.length || P('3–4')} 步`, sub:stepLine, sticker:'步驟條', cta:kwText(k, '領')},
+      {thought:'proof', label:'見證格', visual:'客戶回饋截圖疊在人物前，名字遮掉；用勾勾標出 2 個好處', headline: pr ? `「${pr}」` : `「本來${P('想放棄的事')}，結果${P('做到什麼')}」`, sub:`✓ ${P('好處一')}\n✓ ${P('好處二')}`, sticker:'表情滑桿：你也想要這個結果嗎？', cta: kB ? kwText(kB, '看') : kwText(k, '領')},
+      {thought:'action', label:'動能格', visual:'把數字對比放大（例：30 → 90），再疊 2–3 則回饋截圖', headline: ac || `${prod}有新進度：${P('更新內容')}`, sub:`已經有 ${P('人數')} 位客戶在用`, sticker:'倒數或連結貼紙', cta:kwText(kA, '一次領')}
+    ];
+  } else if (tpl === 'B'){
+    const pb = take('problem'), me = take('method');
+    frames = [
+      {thought:'problem', label:'比喻提問', visual:'有質感的工作或生活場景照，標題壓在上半部', headline:`如果${P('你的領域')}是一間店，你的${topic}正在幫你賺錢嗎？`, sub:`很多人每天都在做這件事，卻從沒想過這個問題`, sticker:'投票：有想過／沒想過', cta:''},
+      {thought:'method', label:'重新框定', visual:'三個圖示＋向下箭頭，一張講完', headline:`其實${P('A')}就像${P('B')}`, sub: st.length ? st.map(s => `${s}：負責${P('它的任務')}`).join('\n') : `${P('角色一')}負責…\n${P('角色二')}負責…\n${P('角色三')}負責…`, sticker:'', cta:''},
+      {thought:'problem', label:'痛點鏡像', visual:'三張小截圖，畫出他現在的做法', headline:`你的${topic}，是不是也長這樣？`, sub: (pb ? pb + '\n' : `${P('做法一')}、${P('做法二')}、${P('做法三')}\n`) + '不是說這些不能做，而是光這樣還不夠。', sticker:'表情滑桿：中了幾個？', cta:''},
+      {thought:'method', label:'心理機制', visual:'模型圖：3–4 個圓角框＋箭頭', headline:`${model}`, sub: me || (st.length ? st.join(' → ') : P('模型的 3 個步驟')), sticker:'測驗：你卡在哪一步？', cta:''},
+      {thought:'action', label:'命名產品＋贈送', visual:'人物剪影或工作桌，產品名做成膠囊標籤', headline:`你缺的不是努力，是一套${S.model || P('方法')}`, sub:`我把它整理成《${prod}》，這段決定免費開放`, sticker:'手寫箭頭指向口令', cta:kwText(k, '領')}
+    ];
+  } else if (tpl === 'C'){
+    const pb = take('problem'), me = take('method'), pr = take('proof');
+    frames = [
+      {thought:'problem', label:'早上｜工作現場', visual:'會議桌、白板、筆記等工作現場照，不拍早餐', headline: pb || `今天客戶問我：「${P('他的問題')}」`, sub:`${topic}，你也遇過嗎？`, sticker:'投票：遇過／沒遇過', cta:''},
+      {thought:'method', label:'下午｜30 秒知識點', visual:'手寫白板或一張圖卡，一張講完', headline:model, sub: me || (st.length ? st.join(' → ') : P('3 個步驟')), sticker:'測驗：選出正確順序', cta:''},
+      {thought:'proof', label:'晚上｜今天的小成果', visual:'回饋截圖或成果照片，名字遮掉', headline: pr ? `「${pr}」` : `今天${P('客戶')}做到了${P('一個具體結果')}`, sub:'用的就是下午那個方法', sticker:'', cta:kwText(k, '領')}
+    ];
+  } else if (tpl === 'D'){
+    const p1 = take('proof'), p2 = take('proof'), ac = take('action');
+    frames = [
+      {thought:'action', label:'第 1 天｜宣布', visual:'人物入鏡口述＋大字標題', headline:`${prod}開放了`, sub:`為什麼現在做：${P('一句理由')}`, sticker:`倒數貼紙：${P('截止時間')}`, cta:''},
+      {thought:'proof', label:'第 2 天｜見證＋疑問', visual:'見證截圖＋問答字卡', headline: p1 ? `「${p1}」` : `「${P('客戶的轉變')}」`, sub:`Q：${P('最常見的疑問')}\nA：${P('你的回答')}`, sticker:'問題箱：還有什麼疑問？', cta:''},
+      {thought:'proof', label:'第 3 天｜見證＋疑問', visual:'第二位客戶的見證，背景換一個場景', headline: p2 ? `「${p2}」` : `「${P('第二位客戶的轉變')}」`, sub:`Q：${P('第二個疑問')}\nA：${P('你的回答')}`, sticker:'', cta:''},
+      {thought:'action', label:'最後一天｜收單', visual:'剩餘名額大字＋倒數貼紙', headline: ac || `最後 ${P('N')} 個名額`, sub:`今晚 ${P('時間')} 截止`, sticker:'倒數貼紙', cta:kwText(k, '領')}
+    ];
+  } else {
+    const me = take('method');
+    frames = [
+      {thought:'problem', label:'第 1 天｜投票', visual:'純色底＋大字，投票貼紙放正中', headline:`關於${topic}，你最卡的是哪一個？`, sub:'', sticker:`投票：${P('A 選項')}／${P('B 選項')}`, cta:''},
+      {thought:'method', label:'第 2 天｜公布結果', visual:'投票結果截圖＋一句建議', headline:`${P('N')}% 的人卡在${P('A')}`, sub: me ? `我的建議：${me}` : `我的建議：${P('一句馬上能做的方法')}`, sticker:'問題箱：還想問什麼？', cta:''},
+      {thought:'action', label:'第 2 天｜接口令', visual:'人物入鏡，手指向口令', headline:'想要完整版？', sub:`我整理成${k.give || P('入口')}`, sticker:'', cta:kwText(k, '領')}
+    ];
+  }
+  return {id:uid8(), title:`${TPLS[tpl].name}｜${state.ui.topic.trim() || '未命名主題'}`, tpl, topic:state.ui.topic.trim(), frames, tips:[], source:'本機草稿', at:Date.now()};
+}
+
+function buildPrompt(){
+  const S = state.shop, T = TYPES[S.type], tier = TIERS[S.tier], tpl = TPLS[state.ui.tpl];
+  const usable = usableAssets();
+  const chosen = usable.filter(a => picked.has(a.id));
+  const list = (chosen.length ? chosen : usable.slice().sort((a,b)=>b.at-a.at).slice(0, 12)).map(a => `- [${TH[a.thought].name}] ${a.text.replace(/^範例：/, '')}`).join('\n') || '- （沒有素材，所有事實都寫成【待補：…】）';
+  const k = kwInfo(state.ui.kw);
+  return `你是 IG 限時動態的轉換文案編輯。依照「一店四念」方法論，為以下帳號寫一組限動劇本。
+
+【一店四念】
+IG 是一間店：Reels 是招牌（引陌生人進來）、輪播是貨架（看懂價值）、限動是店員（建立信任）、口令是收銀台（接住想買的人）。
+客戶下單前心中依序出現四句話：問題念「原來我有這個問題」、方法念「原來你有方法」、見證念「原來別人做到了」、行動念「我現在就要」。每一格限動只推動其中一句。
+
+【帳號】
+品牌：${S.brand || '未填'}
+帳號類型：${T.name}（加重：${T.heavy.map(x=>TH[x].name).join('、')}；見證形式：${T.proof}；限動重點：${T.focus}）
+一句話定位：${S.pitch || '未填'}
+目標客戶：${S.audience || '未填'}
+客戶最痛的問題：${S.pain || '未填'}
+方法模型：${S.model || '未填'}（步驟：${steps().join('、') || '未填'}）
+主力產品：${S.product || '未填'}（單價級距：${tier.name}，決策週期約 ${tier.cycle}）
+這次用的口令：「${k.kw || '未填'}」→ ${k.give || '未填'}
+${S.kwB && state.ui.kw !== 'B' ? `第二口令（可在見證格使用）：「${S.kwB}」→ ${S.kwBgive || '未填'}\n` : ''}語氣：${S.tone.join('、') || '自然'}
+
+【這次】
+模板：${state.ui.tpl} ${tpl.name}（共 ${tpl.th.length} 格，依序：${tpl.th.map(x=>TH[x].name).join('、')}）
+模板結構：${tpl.desc}
+主題：${state.ui.topic.trim() || '請依帳號定位自選一個主題'}
+可用素材（只能使用這些事實，不可編造數字、客戶名、客戶說法或成果）：
+${list}
+
+【規則】
+- 每格主文字 22 個中文字以內，副文字 45 字以內，口語、具體、像在跟一個人說話。
+- 素材沒有提供的事實（數字、客戶原話、名額、日期）一律寫成【待補：說明】，不可捏造。
+- 每格的主文字要讓讀者在心中說出該格對應的那句話。
+- 口令只用上面給的口令，至少出現在最後一格。
+- 不用 emoji 開頭，不寫「讓我們」「一起」這類空話，不誇大保證效果。
+- 使用繁體中文。
+
+只回覆一個 JSON 物件，格式如下：
+{"title":"劇本名稱","frames":[{"thought":"problem|method|proof|action","label":"格位名稱","visual":"畫面怎麼拍、怎麼排版","headline":"主文字","sub":"副文字","sticker":"互動貼紙建議，沒有就空字串","cta":"口令文字，沒有就空字串"}],"tips":["發布前要注意的 1–3 點"]}`;
+}
+
+function phHtml(s){ return esc(s).replace(/【([^】]*)】/g, '<mark class="ph">【$1】</mark>'); }
+function renderScript(){
+  const sc = state.current;
+  if (!sc){ $('#outPanel').hidden = true; return; }
+  $('#outPanel').hidden = false;
+  $('#outTitle').textContent = sc.title;
+  const n = sc.frames.length;
+  $('#reel').innerHTML = sc.frames.map((f,i) => {
+    const t = TH[f.thought] ? f.thought : 'method';
+    return `<div class="frame"><div class="card ${t}">
+      <div class="bars">${Array.from({length:n}, (_,j) => `<i class="${j<=i?'on':''}"></i>`).join('')}</div>
+      <div class="lab"><span>${i+1}／${n}　${esc(f.label || '')}</span>${tag(t)}</div>
+      <div class="hl" contenteditable="true" data-fi="${i}" data-ff="headline" spellcheck="false">${phHtml(f.headline)}</div>
+      <div class="sb" contenteditable="true" data-fi="${i}" data-ff="sub" spellcheck="false">${phHtml(f.sub)}</div>
+      <div class="st" contenteditable="true" data-fi="${i}" data-ff="sticker" spellcheck="false">${phHtml(f.sticker)}</div>
+      <div class="cta" contenteditable="true" data-fi="${i}" data-ff="cta" spellcheck="false">${esc(f.cta || '')}</div>
+    </div><div class="vis"><b>畫面</b>${esc(f.visual || '')}</div><div class="vis"><b>心中話</b>「${TH[t].line}」</div></div>`;
+  }).join('');
+  $('#tips').innerHTML = (sc.tips || []).map(t => `<li>${esc(t)}</li>`).join('');
+}
+let editTimer = null;
+$('#reel').addEventListener('input', e => {
+  const el = e.target.closest('[data-ff]'); if (!el || !state.current) return;
+  state.current.frames[+el.dataset.fi][el.dataset.ff] = el.innerText.trim();
+  const sv = state.scripts.find(s => s.id === state.current.id); if (sv) sv.frames = state.current.frames;
+  clearTimeout(editTimer); editTimer = setTimeout(touch, 600);
+});
+function keepScript(sc){
+  state.current = sc;
+  state.scripts = [sc, ...state.scripts.filter(s => s.id !== sc.id)].slice(0, 30);
+  touch(); renderScript(); renderScriptList(); renderCheckSelect();
+}
+function scriptText(sc){
+  return `${sc.title}\n\n` + sc.frames.map((f,i) => `第 ${i+1} 格｜${f.label || ''}（${TH[f.thought]?.name || ''}）\n畫面：${f.visual || ''}\n主文字：${f.headline || ''}\n副文字：${f.sub || ''}${f.sticker ? '\n貼紙：'+f.sticker : ''}${f.cta ? '\n口令：'+f.cta : ''}`).join('\n\n') + ((sc.tips||[]).length ? '\n\n發布前注意：\n' + sc.tips.map(t=>'・'+t).join('\n') : '');
+}
+function renderScriptList(){
+  const L = state.scripts;
+  $('#scriptList').innerHTML = L.length ? L.map(s => `<div class="aitem"><div class="dots" style="padding-top:9px">${s.frames.map(f=>`<i class="${TH[f.thought]?f.thought:'method'}"></i>`).join('')}</div><div><p>${esc(s.title)}</p><div class="meta">${esc(s.source || '')}・${new Date(s.at).toLocaleDateString('zh-TW')}・${s.frames.length} 格</div></div><span class="row"><button class="iconbtn" data-open-sc="${s.id}">打開</button><button class="iconbtn" data-del-sc="${s.id}" aria-label="刪除劇本">刪除</button></span></div>`).join('')
+    : '<div class="empty">產出的劇本會存在這裡，最多 30 組。</div>';
+}
+$('#scriptList').addEventListener('click', e => {
+  const o = e.target.closest('[data-open-sc]'), d = e.target.closest('[data-del-sc]');
+  if (o){ state.current = clone(state.scripts.find(s => s.id === o.dataset.openSc)); state.current.id = o.dataset.openSc; touch(); renderScript(); $('#outPanel').scrollIntoView({behavior:'smooth', block:'start'}); }
+  if (d){ state.scripts = state.scripts.filter(s => s.id !== d.dataset.delSc); if (state.current && state.current.id === d.dataset.delSc) state.current = null; touch(); renderScriptList(); renderScript(); renderCheckSelect(); }
+});
+$('#genLocal').addEventListener('click', () => { keepScript(localScript()); $('#genStatus').textContent = '本機草稿已產出。黃底的地方換成你的真實內容。'; });
+$('#copyPrompt').addEventListener('click', () => copyText(buildPrompt()));
+$('#copyScript').addEventListener('click', () => state.current && copyText(scriptText(state.current)));
+
+/* Claude 生成 */
+let sampleFn = null, ctl = null;
+const SAMPLE_MSG = {
+  rate_limited:'Claude 目前太忙或你的用量到上限了，晚一點再試。',
+  session_expired:'需要重新登入 Claude。',
+  refused:'Claude 沒辦法寫這個主題，換個說法再試。',
+  invalid_json:'這次回覆格式不完整，再按一次試試。',
+  empty_completion:'Claude 沒有回覆內容，把主題寫得更具體再試。',
+  prompt_too_large:'素材太多了，少勾幾則再試。'
+};
+async function genClaude(){
+  if (!sampleFn) return;
+  ctl = new AbortController();
+  $('#genClaude').disabled = true; $('#stopClaude').hidden = false;
+  $('#genStatus').textContent = 'Claude 正在想……（約 20–60 秒）';
+  try {
+    const out = await sampleFn.json(buildPrompt(), {signal:ctl.signal, cache:false, onText:() => { $('#genStatus').textContent = 'Claude 正在寫……'; }});
+    const frames = Array.isArray(out?.frames) ? out.frames.map(f => ({thought: TH[f.thought] ? f.thought : 'method', label:String(f.label||''), visual:String(f.visual||''), headline:String(f.headline||''), sub:String(f.sub||''), sticker:String(f.sticker||''), cta:String(f.cta||'')})) : [];
+    if (!frames.length) throw {code:'invalid_json'};
+    keepScript({id:uid8(), title:String(out.title || `${TPLS[state.ui.tpl].name}｜${state.ui.topic}`), tpl:state.ui.tpl, topic:state.ui.topic, frames, tips:Array.isArray(out.tips) ? out.tips.map(String).slice(0,3) : [], source:'Claude 撰寫', at:Date.now()});
+    $('#genStatus').textContent = 'Claude 寫好了，已存進劇本庫。';
+  } catch(e){
+    const code = e && e.code;
+    if (['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(code)){ $('#genClaude').hidden = true; $('#genStatus').textContent = '這裡無法使用 Claude 撰寫，改用本機草稿或複製提示詞。'; }
+    else if (code === 'cancelled'){ $('#genStatus').textContent = '已停止。'; }
+    else $('#genStatus').textContent = SAMPLE_MSG[code] || '連線中斷了，再按一次試試。';
+  } finally { $('#genClaude').disabled = false; $('#stopClaude').hidden = true; }
+}
+$('#genClaude').addEventListener('click', genClaude);
+$('#stopClaude').addEventListener('click', () => ctl && ctl.abort());
+
+/* ---------- 一週排程 ---------- */
+function weekKey(d){ const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); const day = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - day); const y = t.getUTCFullYear(); const w = Math.ceil(((t - Date.UTC(y,0,1)) / 864e5 + 1) / 7); return `${y} 第 ${w} 週`; }
+function renderWeek(){
+  const key = weekKey(new Date());
+  if (state.week.key !== key){ state.week = {key, done:{}}; }
+  const plan = weekPlan(state.shop.type), R = TYPES[state.shop.type].ratio, sum = TH_KEYS.reduce((a,k)=>a+R[k],0);
+  $('#weekTitle').textContent = `${key}｜${TYPES[state.shop.type].name}`;
+  const doneN = plan.filter((_,i) => state.week.done[i]).length;
+  $('#weekProgress').textContent = `完成 ${doneN}／7`;
+  $('#ratioBar').innerHTML = TH_KEYS.map(k => `<i class="${k}" style="width:${R[k]/sum*100}%"></i>`).join('');
+  $('#ratioLegend').innerHTML = TH_KEYS.map(k => `<span><i style="background:var(--t-${k})"></i>${TH[k].name} ${R[k]}</span>`).join('');
+  $('#weekBody').innerHTML = plan.map((p,i) => `<tr class="${state.week.done[i]?'done':''}"><td class="c"><input type="checkbox" data-wd="${i}" ${state.week.done[i]?'checked':''} aria-label="${p.d} 完成"></td><td style="white-space:nowrap">${p.d}</td><td><span class="row" style="gap:4px">${p.th.map(tag).join('')}</span></td><td><span class="idea">${esc(p.idea)}</span></td><td style="white-space:nowrap">${p.tpl}　${TPLS[p.tpl].name}</td><td><button class="btn small ghost" data-wgo="${p.tpl}" data-widea="${esc(p.idea)}">產出</button></td></tr>`).join('');
+}
+$('#weekBody').addEventListener('change', e => { const c = e.target.closest('[data-wd]'); if (!c) return; state.week.done[c.dataset.wd] = c.checked; touch(); renderWeek(); });
+$('#weekBody').addEventListener('click', e => { const b = e.target.closest('[data-wgo]'); if (!b) return; state.ui.tpl = b.dataset.wgo; touch(); renderTpls(); renderPicks(); go('maker'); $('#topic').focus(); });
+
+/* ---------- 健檢 ---------- */
+function renderCheckSelect(){
+  const cur = $('#c-script').value;
+  $('#c-script').innerHTML = '<option value="">不指定</option>' + state.scripts.map(s => `<option value="${s.id}">${esc(s.title)}（${s.frames.length} 格）</option>`).join('');
+  $('#c-script').value = state.scripts.some(s => s.id === cur) ? cur : '';
+}
+function analyse(rec, others){
+  const v = rec.views, n = v.length;
+  const completion = n > 1 && v[0] ? v[n-1] / v[0] : null;
+  const kwRate = v[0] ? rec.kw / v[0] : 0;
+  let worst = -1, worstDrop = 0;
+  for (let i = 1; i < n; i++){ const d = v[i-1] ? 1 - v[i]/v[i-1] : 0; if (d > worstDrop){ worstDrop = d; worst = i; } }
+  const sc = state.scripts.find(s => s.id === rec.scriptId);
+  const thAt = i => sc && sc.frames[i] && TH[sc.frames[i].thought] ? sc.frames[i].thought : null;
+  const finds = [];
+  const avgFirst = others.length >= 2 ? others.reduce((a,r)=>a+r.views[0],0) / others.length : null;
+  if (avgFirst && v[0] < avgFirst * 0.8) finds.push({t:'problem', text:`第 1 格觀看比你的平均少 ${Math.round((1 - v[0]/avgFirst)*100)}%。${DIAG.problem}`});
+  if (worst > 0){
+    const t = thAt(worst);
+    finds.push({t: t || null, text:`第 ${worst+1} 格流失最多（少了 ${Math.round(worstDrop*100)}%）。` + (t ? `這格是${TH[t].name}：${DIAG[t]}` : '在健檢裡指定對應劇本，就能看出是哪一念卡住。')});
+  }
+  if (rec.kw === 0 && completion !== null && completion >= 0.5) finds.push({t:'proof', text:`有一半以上的人看完，但沒人留口令。${DIAG.proof}`});
+  if (others.length >= 2){
+    const avgKw = others.reduce((a,r)=>a + (r.views[0] ? r.kw/r.views[0] : 0), 0) / others.length;
+    if (avgKw > 0 && kwRate < avgKw * 0.7 && rec.kw > 0) finds.push({t:'action', text:`口令率比你的平均低。${DIAG.action}`});
+  }
+  return {completion, kwRate, worst, finds};
+}
+function pct(x){ return x === null ? '—' : (x*100).toFixed(1) + '%'; }
+function renderChecks(){
+  const L = state.checks.slice().sort((a,b) => b.at - a.at);
+  if (L.length >= 2){
+    const c = L.filter(r=>r.views.length>1 && r.views[0]).map(r => r.views.at(-1)/r.views[0]);
+    const k = L.filter(r=>r.views[0]).map(r => r.kw/r.views[0]);
+    $('#checkAvg').textContent = `你的平均：完看率 ${c.length ? pct(c.reduce((a,b)=>a+b,0)/c.length) : '—'}・口令率 ${k.length ? pct(k.reduce((a,b)=>a+b,0)/k.length) : '—'}`;
+  } else $('#checkAvg').textContent = '記滿 3 筆後，會用你自己的平均來比較。';
+  $('#checkList').innerHTML = L.length ? L.map(r => {
+    const a = analyse(r, state.checks.filter(x => x.id !== r.id)), max = Math.max(...r.views, 1);
+    const sc = state.scripts.find(s => s.id === r.scriptId);
+    return `<div class="crec"><div><div class="vbars">${r.views.map((x,i) => `<div class="vbar"><span>${x}</span><i class="${i===a.worst?'worst':''}" style="height:${Math.max(4, x/max*78)}px"></i><em>${sc && sc.frames[i] && TH[sc.frames[i].thought] ? TH[sc.frames[i].thought].name : '第'+(i+1)+'格'}</em></div>`).join('')}</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:0"><div class="outhead"><b>${esc(r.name)}</b><button class="iconbtn" data-del-ck="${r.id}" aria-label="刪除紀錄">刪除</button></div>
+      <div class="metrics"><span>完看率<b>${pct(a.completion)}</b></span><span>口令<b>${r.kw}</b></span><span>口令率<b>${pct(a.kwRate)}</b></span></div>
+      ${a.finds.length ? `<ul class="finds">${a.finds.map(f => `<li>${f.t ? tag(f.t)+' ' : ''}${esc(f.text)}</li>`).join('')}</ul>` : '<div class="muted">各格流失平均，沒有明顯卡關點。持續記錄。</div>'}</div></div>`;
+  }).join('') : '<div class="empty">還沒有紀錄。發完一個限動串後 24 小時，把每一格的觀看數記在這裡。</div>';
+}
+$('#addCheck').addEventListener('click', () => {
+  const views = $('#c-views').value.split(/[,，、\s]+/).map(x => parseInt(x.replace(/[^\d]/g,''),10)).filter(x => !isNaN(x));
+  const kw = parseInt($('#c-kw').value, 10);
+  if (views.length < 2){ $('#checkErr').textContent = '至少填 2 格的觀看數，用逗號分隔。'; return; }
+  if (isNaN(kw) || kw < 0){ $('#checkErr').textContent = '填上口令數，沒有就填 0。'; return; }
+  $('#checkErr').textContent = '';
+  state.checks.push({id:uid8(), name:$('#c-name').value.trim() || new Date().toLocaleDateString('zh-TW') + ' 限動串', views, kw, scriptId:$('#c-script').value, at:Date.now()});
+  if (state.checks.length > 60) state.checks.shift();
+  $('#c-name').value = ''; $('#c-views').value = ''; $('#c-kw').value = '';
+  touch(); renderChecks(); toast('已加入健檢');
+});
+$('#checkList').addEventListener('click', e => { const b = e.target.closest('[data-del-ck]'); if (!b) return; state.checks = state.checks.filter(c => c.id !== b.dataset.delCk); touch(); renderChecks(); });
+
+/* ---------- 備份 ---------- */
+let downloadsNs = null, pendingImport = null;
+$('#exportBtn').addEventListener('click', async () => {
+  const data = JSON.stringify(state, null, 2), name = `爆款限動製造機備份-${new Date().toISOString().slice(0,10)}.json`;
+  if (downloadsNs){
+    try { await downloadsNs.save({filename:name, data}); toast('已下載'); return; }
+    catch(e){ if (e && e.code === 'declined') return; }
+  }
+  if (!window.claude){
+    try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], {type:'application/json'})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('已下載'); return; } catch(_){}
+  }
+  $('#jsonOut').hidden = false; $('#jsonOut').value = data; $('#jsonOut').select(); toast('這裡不能直接下載，請複製下方 JSON');
+});
+$('#showJson').addEventListener('click', () => { const t = $('#jsonOut'); t.hidden = !t.hidden; t.value = JSON.stringify(state, null, 2); });
+$('#importFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { try { const d = JSON.parse(r.result); if (!d || !d.shop) throw 0; pendingImport = d; $('#importConfirm').hidden = false; $('#importMsg').textContent = `讀到：${d.shop.brand || '未命名店面'}，素材 ${(d.assets||[]).length} 則、劇本 ${(d.scripts||[]).length} 組。`; } catch(_){ $('#importMsg').textContent = '這不是製造機的備份檔，請選先前匯出的 JSON。'; } };
+  r.readAsText(f);
+});
+$('#importYes').addEventListener('click', () => { if (!pendingImport) return; state = normalize(pendingImport); state.isSample = false; pendingImport = null; $('#importConfirm').hidden = true; $('#importFile').value=''; touch(); renderAll(); $('#importMsg').textContent = '已匯入。'; });
+$('#importNo').addEventListener('click', () => { pendingImport = null; $('#importConfirm').hidden = true; $('#importFile').value=''; $('#importMsg').textContent = ''; });
+$('#resetBtn').addEventListener('click', () => { $('#resetConfirm').hidden = false; });
+$('#resetNo').addEventListener('click', () => { $('#resetConfirm').hidden = true; });
+$('#resetYes').addEventListener('click', () => { state = blankState(); $('#resetConfirm').hidden = true; touch(); renderAll(); toast('已清空'); go('shop'); });
+
+/* 範例處理 */
+$('#keepSample').addEventListener('click', () => { state.isSample = false; touch(); renderStrip(); go('shop'); });
+$('#clearSample').addEventListener('click', () => { state = blankState(); touch(); renderAll(); go('shop'); });
+
+/* ---------- 路由 ---------- */
+const VIEWS = ['maker','shop','assets','week','check','backup'];
+function go(v){ if (!VIEWS.includes(v)) v = 'maker'; if (location.hash !== '#'+v) history.replaceState(null, '', '#'+v); show(v); }
+function show(v){ $$('.view').forEach(s => s.hidden = s.dataset.v !== v); $$('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.view === v)); }
+$$('.tab').forEach(t => t.addEventListener('click', () => { go(t.dataset.view); window.scrollTo({top:0}); }));
+window.addEventListener('hashchange', () => show(VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'maker'));
+
+function renderAll(){
+  renderStrip(); renderShop(); renderAssets(); renderTpls(); renderKwPick(); renderPicks();
+  $('#topic').value = state.ui.topic || '';
+  if (!state.current && state.isSample){ state.current = localScript(); state.current.source = '範例草稿'; }
+  renderScript(); renderScriptList(); renderWeek(); renderCheckSelect(); renderChecks();
+}
+renderAll();
+setSync(false);
+show(VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'maker');
+
+/* ---------- 平台能力（慢慢亮起） ---------- */
+if (window.claude && typeof window.claude.use === 'function'){
+  claude.use('sample').then(s => { sampleFn = s; $('#genClaude').hidden = !s; }).catch(() => {});
+  claude.use('downloads').then(d => { downloadsNs = d; }).catch(() => {});
+  (async () => {
+    try {
+      const user = await claude.use('user'), db = await claude.use('db');
+      if (!user || !db){ setSync(false); return; }
+      const id = await user.id(); if (!id){ setSync(false); return; }
+      docRef = db.doc('data/users/' + id + '/storymaker');
+      const snap = await docRef.get();
+      if (snap.exists){
+        const remote = snap.data();
+        if (state.isSample || !state.updatedAt || (remote.updatedAt || 0) >= state.updatedAt){ state = normalize(clone(remote)); saveLocal(); renderAll(); }
+        else await flush();
+      } else if (!state.isSample) await flush();
+      setSync(true);
+    } catch(e){ setSync(false); }
+  })();
+}
+})();
+</script>
+
+</body></html>
